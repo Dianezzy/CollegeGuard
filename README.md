@@ -9,7 +9,7 @@ npm install --global expo-cli
 
 #### 创建新项目
 expo init proj_name
-# 模板选择 blank 空白模板即可
+#### 模板选择 blank 空白模板即可
 流程完毕后，进入 se-example 文件夹，并执行 npm start。
 
 运行成功后，页面左下角会出现二维码，可以使用手机 expo 客户端扫码。手机 expo 客户端下载链接为 https://expo.io/tools#client。
