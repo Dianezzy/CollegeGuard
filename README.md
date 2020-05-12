@@ -8,7 +8,7 @@
 npm install --global expo-cli
 
 #### 创建新项目
-expo init se-example
+expo init proj_name
 # 模板选择 blank 空白模板即可
 流程完毕后，进入 se-example 文件夹，并执行 npm start。
 
@@ -25,5 +25,6 @@ docs for reactnative https://reactnative.cn/
 https://expo.io/
 
 后端：express - nodejs https://www.expressjs.com.cn/
+
 UI: Ant Design Mobile of React https://rn.mobile.ant.design/index-cn
 
