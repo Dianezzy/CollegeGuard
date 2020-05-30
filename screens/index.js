@@ -5,3 +5,4 @@ export { default as ForgotPasswordScreen } from './ForgotPasswordScreen';
 export { default as HomeScreen } from './HomeScreen';
 export { default as ShopScreen } from './ShopScreen';
 export { default as PersonalCenterScreen } from './PersonalCenterScreen';
+export { default as FindRouteScreen } from './FindrouteScreen';

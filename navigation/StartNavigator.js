@@ -60,6 +60,8 @@ function getHeaderTitle(navigation) {
   switch (routeName) {
     case 'Home':
       return 'College Guard';
+    case 'Route':
+      return '安全路径';
     case 'Shop':
       return '社区购物';
     case 'PersonalCenter':
