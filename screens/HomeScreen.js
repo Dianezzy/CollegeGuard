@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 // import { MonoText } from '../components/StyledText';
 // import GoogleMap from 'react-native-maps-google';
 import { MapView } from "react-native-amap3d";
+import {Fetch} from '../core/mapdata';
 
 export default function HomeScreen() {
   return (
@@ -30,6 +31,7 @@ export default function HomeScreen() {
                     longitude: 116.37296
                 }}
             /> */}
+            <Fetch/> 
         </View>
 
         <View style={styles.buttonContainer}>
