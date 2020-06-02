@@ -27,6 +27,16 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "sdkVersion": "37.0.0",
+    "isDetached": true,
+    "detach": {
+      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.15.0-sdk37.0.0-25317bc5-e70a-4ffb-b59f-8e2b6fcdd8ce.tar.gz"
+    },
+    "android": {
+      "package": "com.GH.sgbbhygdwmd",
+      "publishBundlePath": "android\\app\\src\\main\\assets\\shell-app.bundle",
+      "publishManifestPath": "android\\app\\src\\main\\assets\\shell-app-manifest.json"
     }
   }
 }

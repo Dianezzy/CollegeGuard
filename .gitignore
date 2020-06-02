@@ -15,3 +15,5 @@ yarn.lock
 yarn-error.log
 .expo-shared/*
 .vscode/*
+android/*
+node_modules

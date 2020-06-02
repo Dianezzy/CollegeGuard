@@ -1,49 +1,131 @@
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, PermissionsAndroid } from 'react-native';
+// import { ScrollView } from 'react-native-gesture-handler';
 
 // import { MonoText } from '../components/StyledText';
 // import GoogleMap from 'react-native-maps-google';
 import { MapView } from "react-native-amap3d";
+// import MapView from 'react-native-maps';
+// import { MapView, MapTypes, Geolocation, Overlay } from 'react-native-baidu-map';
 
-export default function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+import Layout from '../constants/Layout';
+
+export default class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      cur_latitude: 0,
+      cur_longitude: 0,
+      place_coords: [],
+      // place_radius: [],
+    }
+
+    var _init = false;
+    var init_latitude = 0;//39.5;
+    var init_longitude = 0;//116;
+  }
+
+  componentDidMount() {
+    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION);
+
+    // 每隔一段时间刷新热力图
+    this.interval = setInterval(this.updateHeatmap, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  updateHeatmap = () => {
+    console.log("update");
+    this.setState({
+      key: Math.random(),
+      place_coords: (new Array(100)).fill(0).map(i => ({
+        latitude: this.init_latitude + 0.005*(2*Math.random()-1),
+        longitude: this.init_longitude + 0.005*(2*Math.random()-1),
+      })),
+      // place_radius: (new Array(100)).fill(Math.random()*20 + 10),
+    })
+    // console.log(this.state.place_radius);
+  }
+
+  // 定位事件
+  _LocationEvent = data => {
+    console.log("onLocation", data.latitude, data.longitude);
+    this.setState({
+      cur_latitude: data.latitude,
+      cur_longitude: data.longitude,
+    });
+
+    // 初始化
+    if (!this._init) {
+      this.init_latitude = data.latitude;
+      this.init_longitude = data.longitude;
+
+      this._init = true;
+
+      // 移至定位点
+      this.mapView.setStatus(
+        {
+          // tilt: 0,
+          rotation: 0,
+          zoomLevel: 18,
+          center: {
+            latitude: this.init_latitude,
+            longitude: this.init_longitude
+          },
+        }, 1000
+      );
+
+      // 初始化热力图
+      this.updateHeatmap();
+    }
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
         <View style={styles.mapContainer}>
-          {/* <GoogleMap
-              cameraPosition={{auto: true, zoom: 10}}
-              showsUserLocation={true}
-              scrollGestures={true}
-              zoomGestures={true}
-              tiltGestures={true}
-              rotateGestures={true}
-              consumesGesturesInView={true}
-              compassButton={true}
-              myLocationButton={true}
-              indoorPicker={true}
-              allowScrollGesturesDuringRotateOrZoom={true}
-          /> */}
-            {/* <MapView
-                coordinate={{
-                    latitude: 39.91095,
-                    longitude: 116.37296
-                }}
-            /> */}
+
+          <MapView ref={ref => (this.mapView = ref)}
+            style={styles.mapStyle}
+            width={Layout.window.width}
+            height={Layout.window.height}
+            coordinate={{ latitude: this.init_latitude, longitude: this.init_longitude }}
+            zoomLevel={18}
+            tilt={0}
+            locationEnabled={true}
+            showsZoomControls={false}
+            showsTraffic
+            // showsIndoorMap
+            // showsLocationButton
+            onLocation={this._LocationEvent}
+          // locationStyle={{
+          //   image: "flag",
+          //   // fillColor: "red",
+          //   // strokeColor: "red",
+          //   strokeWidth: 0
+          // }}
+          >
+            {this.state.place_coords.length > 0 &&
+              <MapView.HeatMap
+                key={this.state.key}
+                opacity={0.8}
+                radius={25}
+                coordinates={this.state.place_coords} />
+            }
+          </MapView>
         </View>
 
-        <View style={styles.buttonContainer}>
-          
-        </View>
-      </ScrollView>
-
-    </View>
-  );
+      </View>
+    );
+  }
 }
 
-HomeScreen.navigationOptions = {
-  header: null,
-};
+// HomeScreen.navigationOptions = {
+//   header: null,
+// };
 
 
 const styles = StyleSheet.create({
@@ -55,9 +137,10 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   mapContainer: {
+    flex: 1,
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
+    // marginTop: 0,
+    // marginBottom: 20,
   },
   homeScreenFilename: {
     marginVertical: 7,
@@ -93,5 +176,10 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 15,
     alignItems: 'center',
+  },
+  mapStyle: {
+    flex: 1,
+    // width: 300,//Dimensions.get('window').width,
+    // height: 400,//Dimensions.get('window').height,
   },
 });
