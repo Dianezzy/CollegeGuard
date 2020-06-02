@@ -3,10 +3,8 @@ import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, PermissionsA
 // import { ScrollView } from 'react-native-gesture-handler';
 
 // import { MonoText } from '../components/StyledText';
-// import GoogleMap from 'react-native-maps-google';
 import { MapView } from "react-native-amap3d";
-// import MapView from 'react-native-maps';
-// import { MapView, MapTypes, Geolocation, Overlay } from 'react-native-baidu-map';
+import { Fetch, fetchData } from '../core/mapdata';
 
 import Layout from '../constants/Layout';
 
@@ -31,6 +29,11 @@ export default class HomeScreen extends React.Component {
 
     // 每隔一段时间刷新热力图
     this.interval = setInterval(this.updateHeatmap, 5000);
+
+    // 请求json数据（测试）
+    var origin = '116.434307,39.90909';
+    var destination = '116.434446,39.90816';
+    fetchData(origin, destination);
   }
 
   componentWillUnmount() {
@@ -42,8 +45,8 @@ export default class HomeScreen extends React.Component {
     this.setState({
       key: Math.random(),
       place_coords: (new Array(100)).fill(0).map(i => ({
-        latitude: this.init_latitude + 0.005*(2*Math.random()-1),
-        longitude: this.init_longitude + 0.005*(2*Math.random()-1),
+        latitude: this.init_latitude + 0.005 * (2 * Math.random() - 1),
+        longitude: this.init_longitude + 0.005 * (2 * Math.random() - 1),
       })),
       // place_radius: (new Array(100)).fill(Math.random()*20 + 10),
     })

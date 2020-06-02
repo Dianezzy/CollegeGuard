@@ -5,9 +5,10 @@ import { NavigationContainer,createAppContainer } from 'react-navigation';
 import TabBarIcon from '../components/TabBarIcon';
 
 import {
-  HomeScreen,
-  ShopScreen,
-  PersonalCenterScreen
+    HomeScreen,
+    ShopScreen,
+    PersonalCenterScreen,
+    FindRouteScreen
 } from '../screens';
 
 const BottomTab=createBottomTabNavigator({
@@ -23,6 +24,20 @@ const BottomTab=createBottomTabNavigator({
                     />
                 );
             }
+        }
+    },
+    Route: {
+        screen: FindRouteScreen,
+        navigationOptions:{
+            tabBarLabel: '导航',
+            tabBarIcon: ({focused})=>{
+                return (
+                    <TabBarIcon 
+                        name='directions-run'
+                        focused={focused}
+                    />
+                );
+            },
         }
     },
     Shop:{
@@ -52,7 +67,7 @@ const BottomTab=createBottomTabNavigator({
                 );
             }
         }
-    },    
+    },
 },
 {
 
