@@ -17,6 +17,13 @@ expo init proj_name
 运行成功后，页面左下角会出现二维码，可以使用手机 expo 客户端扫码。手机 expo 客户端下载链接为 https://expo.io/tools#client。
 
 在手机上运行 expo 客户端后，将手机于开发机连入同一局域网，扫描左下角的二维码即可运行 app。
+#### 后端服务器
+google cloud platform
+centOS 7
+Python 3.6.8
+Selenium
+Flask 1.1.2
+Werkzeug 1.0.1
 
 ### 资源参考
 1. react-native中的google地图库
