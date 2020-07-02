@@ -1,0 +1,1 @@
+global._init = false;

@@ -17,3 +17,5 @@ yarn-error.log
 .vscode/*
 android/*
 node_modules
+core/__pycache__/generate_data.cpython-35.pyc
+core/easygo-backend/*

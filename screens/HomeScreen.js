@@ -5,8 +5,10 @@ import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, PermissionsA
 // import { MonoText } from '../components/StyledText';
 import { MapView } from "react-native-amap3d";
 import { Fetch, fetchData } from '../core/mapdata';
+import { fetchPopulationData } from '../core/heatmap';
 
 import Layout from '../constants/Layout';
+import '../constants/globals";
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -19,16 +21,17 @@ export default class HomeScreen extends React.Component {
       // place_radius: [],
     }
 
-    var _init = false;
-    var init_latitude = 0;//39.5;
-    var init_longitude = 0;//116;
+    // this._init = false;
+    this.init_latitude = 0;//39.5;
+    this.init_longitude = 0;//116;
+    // this.region_latlng = new Array(4); // 左上 右上 左下 右下四个点经纬度
   }
 
   componentDidMount() {
     PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION);
 
     // 每隔一段时间刷新热力图
-    this.interval = setInterval(this.updateHeatmap, 5000);
+    // this.interval = setInterval(this.updateHeatmap, 3600000);
 
     // 请求json数据（测试）
     var origin = '116.434307,39.90909';
@@ -41,32 +44,39 @@ export default class HomeScreen extends React.Component {
   }
 
   updateHeatmap = () => {
-    console.log("update");
-    this.setState({
-      key: Math.random(),
-      place_coords: (new Array(100)).fill(0).map(i => ({
-        latitude: this.init_latitude + 0.005 * (2 * Math.random() - 1),
-        longitude: this.init_longitude + 0.005 * (2 * Math.random() - 1),
-      })),
-      // place_radius: (new Array(100)).fill(Math.random()*20 + 10),
-    })
-    // console.log(this.state.place_radius);
+    if (this.state.cur_latitude === 0 && this.state.cur_longitude === 0)
+      fetchPopulationData(this.init_latitude, this.init_longitude, this);
+    else
+      fetchPopulationData(this.state.cur_latitude, this.state.cur_longitude, this);
   }
 
   // 定位事件
   _LocationEvent = data => {
-    console.log("onLocation", data.latitude, data.longitude);
     this.setState({
       cur_latitude: data.latitude,
       cur_longitude: data.longitude,
+    }, () => {
+      // console.log(this.state.cur_latitude, this.state.cur_longitude);
     });
 
     // 初始化
-    if (!this._init) {
+    if (!global._init) {
       this.init_latitude = data.latitude;
       this.init_longitude = data.longitude;
 
-      this._init = true;
+      // 热力图覆盖范围
+      // var radius = 5; // km
+      // this.region_latlng[0] = (this.init_longitude - 0.01 * radius) + "," + (this.init_latitude + 0.01 * radius); // 左上
+      // this.region_latlng[1] = (this.init_longitude + 0.01 * radius) + "," + (this.init_latitude + 0.01 * radius); // 右上
+      // this.region_latlng[2] = (this.init_longitude - 0.01 * radius) + "," + (this.init_latitude - 0.01 * radius); // 左下
+      // this.region_latlng[3] = (this.init_longitude + 0.01 * radius) + "," + (this.init_latitude - 0.01 * radius); // 右下
+
+      // for (var i = 0; i < 4; i++) {
+      //   console.log(this.region_latlng[i]);
+      // }
+      // fetchPopulationData(this.region_latlng);
+
+      global._init = true;
 
       // 移至定位点
       this.mapView.setStatus(
