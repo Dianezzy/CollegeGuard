@@ -3,6 +3,8 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 import { NavigationContainer,createAppContainer } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
+// import ShoppingNavigator from '../shopping/ShoppingNavigator';
+import ShoppingNavigator from '../purchase/shopping/ShoppingNavigator';
 
 import {
     HomeScreen,
@@ -39,9 +41,9 @@ const BottomTab=createBottomTabNavigator({
                 );
             },
         }
-    },
+    }, 
     Shop:{
-        screen: ShopScreen,
+        screen: ShoppingNavigator,
         navigationOptions:{
             tabBarLabel: '购物',
             tabBarIcon: ({focused})=>{

@@ -4,7 +4,7 @@ class Cache{
         return Cache.storage.find((item)=>{return item.key==key;});
     }
     static set(key,value){
-        let result=Cache.find(key);
+        result=Cache.find(key);
         if(result==undefined)
             Cache.storage.push({key:key, value:value});
         else{
@@ -149,3 +149,4 @@ class Cache{
 }
 
 export default Cache;
+

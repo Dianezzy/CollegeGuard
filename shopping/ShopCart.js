@@ -1,9 +1,9 @@
 import React from 'react';
-import Cache from '../../core/Cache';
-import { Ionicons } from '@expo/vector-icons';
+import Cache from '../purchase/Cache';
+import {Icon} from 'react-native-elements';
 import { Tabs, WingBlank, WhiteSpace, List, Button, Flex } from '@ant-design/react-native';
 import { StyleSheet, Image, ScrollView, Text, View, TouchableOpacity, Alert } from 'react-native';
-import {InsertOrder} from '../DatabaseClient';
+import {InsertOrder} from '../purchase/DatabaseClient';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -55,23 +55,23 @@ export default class ShopCart extends React.Component{
                                                 <Text style={styles.price}>￥{item.price}</Text>
                                             </View>
                                             <WingBlank style={{ marginBottom: 5, flexDirection: 'row', alignItems:'center' }}>
-                                                <Ionicons name="ios-remove-circle" size={24} color="black" onPress={()=>{
+                                                <Icon name='ios-remove-circle' type='ionicon' onPress={()=>{
                                                             Cache.itemNoPlus(item.id,-1);
                                                             this.setState({
                                                                 sumPrice:Cache.countPrice(),
                                                                 items:Cache.getItemList(),
                                                             })
-                                                        }}></Ionicons>
-                                                
+                                                        }}></Icon>
                                                 
                                                 <WingBlank ><Text>{Cache.getItemNo(item.id)}</Text></WingBlank>
-                                                <Ionicons name="ios-add-circle" size={24} color="black" onPress={()=>{
+                                                <Icon name='ios-add-circle' type='ionicon' onPress={()=>{
                                                             Cache.itemNoPlus(item.id,1);
                                                             this.setState({
                                                                 sumPrice:Cache.countPrice(),
                                                                 items:Cache.getItemList(),
                                                             });
-                                                        }}></Ionicons>
+                                                            console.log(this.state.sumPrice);
+                                                        }}></Icon>
                                             </WingBlank>
                                             {/* <Flex style={styles.cartExtra}>
                                                 <Flex.Item>

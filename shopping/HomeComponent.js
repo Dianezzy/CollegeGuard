@@ -3,9 +3,7 @@ import { Text, Image, TextInput, View, StyleSheet, StatusBar, KeyboardAvoidingVi
 import * as Animatable from "react-native-animatable";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {SceneMap, TabView,TabBar} from "react-native-tab-view";
-import {GetMerchants} from '../DatabaseClient';
-import * as Font from 'expo-font';
-import { AppLoading } from 'expo';
+import {GetMerchants} from '../purchase/DatabaseClient';
 
 let windowWidth = Dimensions.get('window').width;
 let windowheight = Dimensions.get('window').height;
@@ -168,30 +166,22 @@ var data3 = [
 
 export default class HomeComponent extends Component{
 
-    constructor(props) {
+    constructor(props){
         super(props);
+        
         this.state = {
             index: 0,
-            fontloaded:false,
-            routes: [
+            routes:[
                 { key: 'first', title: '餐饮外卖' },
                 { key: 'second', title: '日常用品' },
-                { key: 'third', title: '医疗用品' },
+                { key:'third', title: '医疗用品' },
             
 
             ],
         };
     }
-    componentDidMount() {
-        // Font.loadAsync(
-        //     'PingFangSC-Regular',
-        //     require('../../assets/PingFangSC-Regular.ttf')).then(() => this.setState({ fontloaded: true}))
-    }
-
-    render() {
-        // if (!this.state.fontloaded) {
-        //     return <AppLoading/>
-        // }
+    
+    render(){
     return (
         <ScrollView>
         
@@ -206,7 +196,7 @@ export default class HomeComponent extends Component{
                     source={require('../assets/map.png')}
                     style={styles.map}
                 />
-                <Text style={styles.address}>浙江大学玉泉校区3舍</Text>
+                <Text style={styles.address}>浙江大学玉泉校区12舍</Text>
                 
             </View>
 

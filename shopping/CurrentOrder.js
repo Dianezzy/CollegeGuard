@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Button, List, WhiteSpace, WingBlank } from '@ant-design/react-native';
-import { GetOrderList_tenant } from '../DatabaseClient';
-import Cache from '../../core/Cache';
+import { GetOrderList_tenant } from '../purchase/DatabaseClient';
+import Cache from '../purchase/Cache';
 
 const Item = List.Item;
 
@@ -29,7 +29,6 @@ export class CurrentOrder extends React.Component {
         });
     }
     render(){
-        console.log(this.state.t_id);
         return (
             <View>
                 <WingBlank>

@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, Image, ScrollView, Text, View, TouchableOpacity } from 'react-native';
 import { Tabs, WingBlank, WhiteSpace, List, Button, Flex } from '@ant-design/react-native';
 import {ItemDisplay} from './ItemDisplay';
-import Cache from '../../core/Cache';
-import {GetItems} from '../DatabaseClient';
+import Cache from '../purchase/Cache';
+import {GetItems} from '../purchase/DatabaseClient';
 
 var items=[{
     id:'default',

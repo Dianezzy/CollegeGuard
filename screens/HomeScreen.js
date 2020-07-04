@@ -8,7 +8,7 @@ import { Fetch, fetchData } from '../core/mapdata';
 import { fetchPopulationData } from '../core/heatmap';
 
 import Layout from '../constants/Layout';
-import '../constants/globals";
+import '../constants/globals';
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
