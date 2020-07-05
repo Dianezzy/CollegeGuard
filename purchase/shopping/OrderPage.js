@@ -62,11 +62,13 @@ export class OrderPage extends Component{
             id: props.navigation.state.params.id,
             stat: props.navigation.state.params.stat
         };
+        // alert(this.state.id+ this.state.stat);
     }
     componentDidMount() {
         GetOrderInfo(this.state.id).then((response)=>{this.successShow(response[0])});
     }
     successShow(response) {
+        // alert(response.id);
         this.setState({
             t_id: response.t_id,
             item_list: response.item_list,

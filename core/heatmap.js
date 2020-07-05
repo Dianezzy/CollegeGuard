@@ -71,7 +71,8 @@ async function fetchPopulationData(lat, lng, obj) {
             }
             obj.setState({
                 key: Math.random(),
-                place_coords: res_arr//.slice(0, 5)
+                place_coords: res_arr,
+                heatmap_json: json,
             })
         })
         .catch((e) => {

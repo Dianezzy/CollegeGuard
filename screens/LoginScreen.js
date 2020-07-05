@@ -74,18 +74,18 @@ export default class LoginScreen extends React.Component {
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('ForgotPassword')}
           >
-            <Text style={styles.label}>Forgot your password?</Text>
+            <Text style={styles.label}>忘记密码</Text>
           </TouchableOpacity>
         </View>
 
         <Button mode="contained" onPress={this._onLoginPressed}>
-          Login
+          登录
       </Button>
 
         <View style={styles.row}>
-          <Text style={styles.label}>Don’t have an account? </Text>
+          <Text style={styles.label}>还没有账号? </Text>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')}>
-            <Text style={styles.link}>Sign up</Text>
+            <Text style={styles.link}>注册</Text>
           </TouchableOpacity>
         </View>
       </Background>

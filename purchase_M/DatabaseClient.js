@@ -127,9 +127,11 @@ export function ChangeStat(OrderID) {
 
 export async function GetOrderInfo(id) {
     let data = {id: id};
+    console.log(data);
     let result = await instance.get('/request/shoppingOrder/selectorderid', {
         params: data
     }).then(function (response) {
+        // alert(response.data.message);
         return response.data.message;
     }).catch(function (error) {
         console.log(error);

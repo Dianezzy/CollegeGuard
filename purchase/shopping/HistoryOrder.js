@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { List, WhiteSpace, WingBlank } from '@ant-design/react-native';
-import { GetHistoryOrderList_tenant } from '../DatabaseClient';
+import { GetHistoryOrderList_tenant, GetOrderList_tenant } from '../DatabaseClient';
 import Cache from '../../core/Cache';
 
 const Item = List.Item;
@@ -16,7 +16,8 @@ export class HistoryOrder extends React.Component {
         };
     }
     componentDidMount() {
-        GetHistoryOrderList_tenant(this.state.id).then((response)=>{this.successShow(response)});
+        // GetHistoryOrderList_tenant(this.state.id).then((response)=>{this.successShow(response)});
+        GetOrderList_tenant(this.state.id).then((response)=>{this.successShow(response)});
     }
     successShow(response) {
         let orders = [];

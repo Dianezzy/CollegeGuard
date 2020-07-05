@@ -30,7 +30,7 @@ export default class ShopCart extends React.Component{
     getItemListToString() {
         var string="";
         // console.log(this.state.items);
-        for(index in this.state.items){
+        for(var index in this.state.items){
             string+=( this.state.items[index].id+"*"+this.state.items[index].count+";\n");
         }
         return  string;
@@ -46,7 +46,7 @@ export default class ShopCart extends React.Component{
                         this.state.items.map(
                             (item,key)=>{
                                 return(
-                                    <Item wrap >
+                                    <Item key={key} wrap>
                                         <WingBlank style={{ marginBottom: 5, flexDirection: 'row', alignItems:'center' }}>
                                             <Image source={{uri: item.pic}} style={styles.smallPictureSize}></Image>
                                             <View>

@@ -28,20 +28,20 @@ const BottomTab=createBottomTabNavigator({
             }
         }
     },
-    Route: {
-        screen: FindRouteScreen,
-        navigationOptions:{
-            tabBarLabel: '导航',
-            tabBarIcon: ({focused})=>{
-                return (
-                    <TabBarIcon 
-                        name='directions-run'
-                        focused={focused}
-                    />
-                );
-            },
-        }
-    }, 
+    // Route: {
+    //     screen: FindRouteScreen,
+    //     navigationOptions:{
+    //         tabBarLabel: '导航',
+    //         tabBarIcon: ({focused})=>{
+    //             return (
+    //                 <TabBarIcon 
+    //                     name='directions-run'
+    //                     focused={focused}
+    //                 />
+    //             );
+    //         },
+    //     }
+    // }, 
     Shop:{
         screen: ShoppingNavigator,
         navigationOptions:{
@@ -54,6 +54,7 @@ const BottomTab=createBottomTabNavigator({
                     />
                 );
             },
+            tabBarVisible: false,
         }
     },
     PersonalCenter:{

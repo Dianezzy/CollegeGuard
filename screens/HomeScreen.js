@@ -4,11 +4,13 @@ import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, PermissionsA
 
 // import { MonoText } from '../components/StyledText';
 import { MapView } from "react-native-amap3d";
-import { Fetch, fetchData } from '../core/mapdata';
-import { fetchPopulationData } from '../core/heatmap';
+import { fetchRouteData, fetchPosData, fetchPopulationData } from '../core/mapdata';
+import { Search } from '../components/dropdown';
 
 import Layout from '../constants/Layout';
 import '../constants/globals';
+import LoadingUtil from "../core/LoadingUtil";
+import Cache from '../core/Cache';
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -18,13 +20,16 @@ export default class HomeScreen extends React.Component {
       cur_latitude: 0,
       cur_longitude: 0,
       place_coords: [],
-      // place_radius: [],
+      search_path_pts: [],
+      heatmap_json: [],
     }
 
-    // this._init = false;
+    this._init = false;
     this.init_latitude = 0;//39.5;
     this.init_longitude = 0;//116;
     // this.region_latlng = new Array(4); // 左上 右上 左下 右下四个点经纬度
+
+    Cache.set("account","lemonxq");
   }
 
   componentDidMount() {
@@ -32,11 +37,6 @@ export default class HomeScreen extends React.Component {
 
     // 每隔一段时间刷新热力图
     // this.interval = setInterval(this.updateHeatmap, 3600000);
-
-    // 请求json数据（测试）
-    var origin = '116.434307,39.90909';
-    var destination = '116.434446,39.90816';
-    fetchData(origin, destination);
   }
 
   componentWillUnmount() {
@@ -60,23 +60,12 @@ export default class HomeScreen extends React.Component {
     });
 
     // 初始化
-    if (!global._init) {
+    // console.log('init', global._init);
+    if (!this._init) {
       this.init_latitude = data.latitude;
       this.init_longitude = data.longitude;
 
-      // 热力图覆盖范围
-      // var radius = 5; // km
-      // this.region_latlng[0] = (this.init_longitude - 0.01 * radius) + "," + (this.init_latitude + 0.01 * radius); // 左上
-      // this.region_latlng[1] = (this.init_longitude + 0.01 * radius) + "," + (this.init_latitude + 0.01 * radius); // 右上
-      // this.region_latlng[2] = (this.init_longitude - 0.01 * radius) + "," + (this.init_latitude - 0.01 * radius); // 左下
-      // this.region_latlng[3] = (this.init_longitude + 0.01 * radius) + "," + (this.init_latitude - 0.01 * radius); // 右下
-
-      // for (var i = 0; i < 4; i++) {
-      //   console.log(this.region_latlng[i]);
-      // }
-      // fetchPopulationData(this.region_latlng);
-
-      global._init = true;
+      this._init = true;
 
       // 移至定位点
       this.mapView.setStatus(
@@ -91,16 +80,48 @@ export default class HomeScreen extends React.Component {
         }, 1000
       );
 
-      // 初始化热力图
-      this.updateHeatmap();
+      // if (!global._init) {
+        // 初始化热力图
+        this.updateHeatmap();
+
+        // global._init = true;
+      // }
+    }
+  }
+
+  _onSearchRoute = () => {
+    console.log("on search");
+    // console.log(this.search_comp.state);
+    if (this.search_comp.state.text === "") {
+      alert("输入为空");
+    } else {
+      console.log("输入的内容为：" + this.search_comp.state.text);
+
+      var origin = this.state.cur_longitude + ',' + this.state.cur_latitude;//'120.125842,30.259188';
+      var destination = this.search_comp.state.location;
+      console.log(origin, destination);
+
+      // 清空上次搜索记录
+      this.setState({
+        search_path_pts: []
+      });
+
+      // 搜索
+      fetchRouteData(origin, destination, this);
     }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.mapContainer}>
+        {/* 查询路径 */}
+        <Search ref={ref => this.search_comp = ref}
+          onSearch={this._onSearchRoute}
+          cur_position={this.state.cur_longitude + ',' + this.state.cur_latitude}
+        />
 
+        <View style={styles.mapContainer}>
+          {/* 地图 */}
           <MapView ref={ref => (this.mapView = ref)}
             style={styles.mapStyle}
             width={Layout.window.width}
@@ -111,22 +132,26 @@ export default class HomeScreen extends React.Component {
             locationEnabled={true}
             showsZoomControls={false}
             showsTraffic
-            // showsIndoorMap
-            // showsLocationButton
             onLocation={this._LocationEvent}
-          // locationStyle={{
-          //   image: "flag",
-          //   // fillColor: "red",
-          //   // strokeColor: "red",
-          //   strokeWidth: 0
-          // }}
           >
+            {/* 热力图 */}
             {this.state.place_coords.length > 0 &&
               <MapView.HeatMap
                 key={this.state.key}
                 opacity={0.8}
                 radius={25}
                 coordinates={this.state.place_coords} />
+            }
+
+            {/* 路径绘制 */}
+            {this.state.search_path_pts.length > 0 ?
+
+              <MapView.Polyline
+                width={15}
+                color="rgba(0, 0, 255, 0.5)"
+                coordinates={this.state.search_path_pts}
+              />
+              : null
             }
           </MapView>
         </View>

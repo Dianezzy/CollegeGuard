@@ -19,14 +19,14 @@ const ItemNavigator=createStackNavigator({
     StoreDetailScreen: {
         screen: StoreDetailComponent,
         navigationOptions: {
-            headerShown: true,
+            headerShown: false,
             headerTitle: "店铺商品列表"
         }
     },
     ItemDisplayScreen: {
         screen: ItemDisplay,
         navigationOptions: {
-            headerShown: true,
+            headerShown: false,
             headerTitle: "商品详情"
         }
     },
