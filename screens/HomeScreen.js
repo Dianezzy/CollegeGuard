@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, PermissionsAndroid } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, PermissionsAndroid, BackHandler, ToastAndroid } from 'react-native';
 // import { ScrollView } from 'react-native-gesture-handler';
 
 // import { MonoText } from '../components/StyledText';
@@ -27,9 +27,10 @@ export default class HomeScreen extends React.Component {
     this._init = false;
     this.init_latitude = 0;//39.5;
     this.init_longitude = 0;//116;
+    this.lastBackPressed = 0;
     // this.region_latlng = new Array(4); // 左上 右上 左下 右下四个点经纬度
 
-    Cache.set("account","lemonxq");
+    // Cache.set("account","lemonxq");
   }
 
   componentDidMount() {
@@ -37,11 +38,32 @@ export default class HomeScreen extends React.Component {
 
     // 每隔一段时间刷新热力图
     // this.interval = setInterval(this.updateHeatmap, 3600000);
+    if (Platform.OS === 'android'){
+      BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
+    }
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
+
+    if (Platform.OS === 'android') {
+      BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
+    }
   }
+
+  onBackAndroid = () => {
+    //禁用返回键
+    if(this.props.navigation.isFocused()) {
+        if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+          BackHandler.exitApp();//直接退出APP
+        }else{
+          this.lastBackPressed = Date.now();
+          ToastAndroid.show('再按一次退出应用', 1000);//提示
+          return true;
+        }
+    }
+  }
+  
 
   updateHeatmap = () => {
     if (this.state.cur_latitude === 0 && this.state.cur_longitude === 0)

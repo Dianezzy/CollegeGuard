@@ -13,8 +13,8 @@ export default class StartScreen extends React.Component {
   }
 
   componentDidMount(){
-    global._init = false;
-    console.log('start reload');
+    // global._init = false;
+    // console.log('start reload');
   }
   render() {
     return (
@@ -23,18 +23,18 @@ export default class StartScreen extends React.Component {
         <Header>College Guard</Header>
 
         <Paragraph>
-          some introduction
+          为在校学生保驾护航
         </Paragraph>
 
         <Button mode="contained" onPress={() => this.props.navigation.navigate('Login')}>
-          Login
+          登录
         </Button>
 
         <Button
           mode="outlined"
           onPress={() => this.props.navigation.navigate('Register')}
         >
-          Sign Up
+          注册
         </Button>
 
         {/* only for developer */}
@@ -42,7 +42,7 @@ export default class StartScreen extends React.Component {
           mode="outlined"
           onPress={() => this.props.navigation.navigate('HomeNavigator')}
         >
-          DEV LOGIN
+          开发者登录
         </Button>
 
       </Background>

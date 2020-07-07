@@ -54,8 +54,8 @@ export class StoreDetailComponent extends React.Component{
         return (
             
                 <ScrollView style={{ flex: 1 }}>
-                    <WhiteSpace />
-                    <List renderHeader={' '}>
+                    
+                    <List renderHeader={'店铺商品列表'}>
                         {
                             this.state.myItems.map((item,key)=>{
                                 return(
@@ -76,7 +76,7 @@ export class StoreDetailComponent extends React.Component{
                                             <Image source={{uri: item.pic}} style={styles.smallPictureSize}></Image>
                                             <View>
                                                 <Text style={styles.title}>{item.id}</Text>
-                                                    <WhiteSpace />
+                                                <Text style={styles.descrip}>余量：50份</Text>
                                                 <Text style={styles.price}>￥{item.price}</Text>
                                             </View>
                                         </WingBlank>
@@ -100,25 +100,40 @@ const styles = StyleSheet.create({
     },
     smallPictureSize: {
         width: 100,
-        height: 100
+        height: 100,
+        borderRadius:5,
+    },
+    descrip:{        
+        marginLeft:10,
+        paddingLeft:2,
+        paddingTop:2,
+        paddingBottom:2,
+        color:"#F8F8FF",
+        fontWeight: "bold",
+        fontSize:15,
+        backgroundColor:'orange',
+        borderRadius:3,
+
     },
     price:{
-        fontSize:30,
-        color:'red',
-        fontWeight:'500',
+        paddingLeft:10,
+        fontSize:15,
+        color:'#CD5C5C',
+        fontWeight:'200',
         fontFamily:'Times New Roman'
     },
     introduction: {
         fontSize:20
     },
     title:{
-        fontSize:30,
+        fontSize:20,
+        paddingLeft:10,
         fontFamily:'Times New Roman'
     },
     add2CartBtn: {
-        fontSize:30,
+        fontSize:25,
         alignItems:'center',
-        color:'blue'
+        color:'#4169E1'
     }
   });
 

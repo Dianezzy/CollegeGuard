@@ -7,15 +7,22 @@ var now = new Date();
 
 var orderDistributor=new distributor.OrderIdDistributor();
 var volunteerDistributor= new distributor.VolunteerIdDistributor();
-// console.log(orderDistributor.getOrderID());
+console.log(orderDistributor.getOrderID());
 
 var connection = mysql.createConnection({
-    host: '182.92.243.158',
+    host: '35.206.225.223',////'127.0.0.1',
     user: 'root',
-    password: 'cs0000',
+    password: '',
     port: '3306',
-    database: 'cs'
+    database: 'ColledgeGuard'
 });
+// var connection = mysql.createConnection({
+//     host: '182.92.243.158',////'127.0.0.1',
+//     user: 'root',
+//     password: 'cs0000',
+//     port: '3306',
+//     database: 'cs'
+// });
 
 var app = experss();
 connection.connect();
@@ -364,6 +371,7 @@ app.get('/request/merchant/select', function selectMerchant(req, res) {
 });
 
 app.get('/request/merchant/list', function listMerchant(req, res) {
+    console.log(req.query, req.body);
     //var getObj = req.query;
     selectSQL = 'SELECT * FROM merchantuserinfo';
     connection.query(selectSQL, function (err, result) {
@@ -911,6 +919,6 @@ app.post('/request/sqlall', function sqlall(req, res) {
 
 
 
-var server = app.listen(8002, function () {
+var server = app.listen(2333, function () {
     console.log("Server open on ", server.address());
 })

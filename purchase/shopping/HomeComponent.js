@@ -11,25 +11,25 @@ let windowWidth = Dimensions.get('window').width;
 let windowheight = Dimensions.get('window').height;
 
 //filter((merchant)=>{return merchant.account!='01'&&merchant.account!='02'&&merchant.account!='03'&&merchant.account!='aa';}).
-var data11 = GetMerchants('location').then(
-    (merchants) => {
-        return merchants.map(
-            (item, index) => {
-                return {
-                    key: index,
-                    name: item.username,
-                    tag: '餐食',
-                    time: '6:00-22:00',
-                    addr: item.address,
-                    distance: '2km',
-                    img_path: require('../assets/nice_5.png')
-                };
-            }
-        )
-    }
-);
+// var data11 = GetMerchants('location').then(
+//     (merchants) => {
+//         return merchants.map(
+//             (item, index) => {
+//                 return {
+//                     key: index,
+//                     name: item.username,
+//                     tag: '餐食',
+//                     time: '6:00-22:00',
+//                     addr: item.address,
+//                     distance: '2km',
+//                     img_path: require('../assets/nice_5.png')
+//                 };
+//             }
+//         )
+//     }
+// );
 
-console.log(GetMerchants('location'));
+// console.log(GetMerchants('location'));
 
 var data1 = [
     {

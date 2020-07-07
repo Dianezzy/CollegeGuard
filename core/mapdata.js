@@ -1,5 +1,5 @@
 
-var SERVER_ADDRESS = 'http://35.206.225.223:5000/data';//'http://192.168.43.117:5000/data';
+var SERVER_ADDRESS = 'http://' + global.SERVER_IP + ':5000/data';//'http://192.168.43.117:5000/data';
 
 var origin = '116.434307,39.90909';
 var destination = '116.434446,39.90816';
@@ -62,18 +62,18 @@ function fetchPopulationData(lat, lng, obj) {
         .then((json) => {
             console.log(json.length, json instanceof Array, res_arr instanceof Array);
 
-            var max_cnt = Math.max.apply(Math, json.map(function(o) {return o.count}));
-            console.log("max cnt",max_cnt);
+            var max_cnt = Math.max.apply(Math, json.map(function (o) { return o.count }));
+            console.log("max cnt", max_cnt);
 
             for (let i = 0; i < json.length; i++) {
                 let [gcj_lng, gcj_lat] = wgs84_to_gcj02(parseFloat(json[i].wgs_lng), parseFloat(json[i].wgs_lat));
                 res_arr.push({
                     'latitude': gcj_lat, //parseFloat(json[i].wgs_lat),
                     "longitude": gcj_lng,//parseFloat(json[i].wgs_lng),
-                    "intensity": parseFloat(json[i].count)/max_cnt
+                    "intensity": parseFloat(json[i].count) / max_cnt
                 })
                 // if (i === 0)
-                    // console.log(res_arr[i]);
+                // console.log(res_arr[i]);
             }
             obj.setState({
                 key: Math.random(),
@@ -133,7 +133,7 @@ function fetchRouteData(origin, destination, obj) {
             let path_index;
             let danger_sum;
             for (let k = 0; k < allpaths_list.length; k++) {
-                                var dangerlist = new Array();
+                var dangerlist = new Array();
                 danger_sum = 0;
                 for (let i = 0; i < coord.length; i++) {
                     let place = coord[i];
@@ -187,9 +187,9 @@ function fetchRouteData(origin, destination, obj) {
             console.log(allpaths_list[path_index]);
 
             var res_list = [];
-            for(let i =0;i<allpaths_list[path_index].length;i++){
+            for (let i = 0; i < allpaths_list[path_index].length; i++) {
                 var item = allpaths_list[path_index][i];
-            // for(var item in allpaths_list[path_index]){
+                // for(var item in allpaths_list[path_index]){
                 let pos_list = item.split(',');
                 // console.log(item, pos_list);
                 res_list.push({

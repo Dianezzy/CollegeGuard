@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, ToastAndroid } from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -7,7 +7,9 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
-import { emailValidator, passwordValidator } from '../core/utils';
+import { emailValidator, passwordValidator, nameValidator } from '../core/utils';
+import { GetUserInfo } from '../core/UserDatabaseClient';
+import Cache from '../core/Cache';
 
 export default class LoginScreen extends React.Component {
   constructor(props) {
@@ -18,24 +20,49 @@ export default class LoginScreen extends React.Component {
       password: '',
       emailError: null,
       passwordError: null,
+      name: '',
+      nameError: null
     };
   }
 
   _onLoginPressed = () => {
-    const emailError = emailValidator(this.state.email);
-    const passwordError = passwordValidator(this.state.password);
-  
-    // console.log(this.state.email,this.state.password);
-    // console.log(emailError,passwordError);
-    if (emailError || passwordError) {
-      this.setState({emailError});
-      this.setState({passwordError});
-      // console.log(this.state.emailError,this.state.passwordError);
+    // let emailError = emailValidator(this.state.email);
+    let passwordError = passwordValidator(this.state.password);
+    let nameError = nameValidator(this.state.name);
+
+    if (nameError || passwordError) {
+      this.setState({ nameError });
+      this.setState({ passwordError });
       return;
     }
 
-    // console.log('login');
-    this.props.navigation.navigate('HomeNavigator');
+    // 查询用户是否存在
+    GetUserInfo(this.state.name).then(
+      (response) => {
+        if (response.length == 0) {
+          nameError = '用户不存在';
+          this.setState({ nameError });
+          return;
+        } else {
+          // 查询密码是否正确
+          let pwd = response[0].pwd;
+          if (pwd === this.state.password) {
+            // alert("登录成功");
+            ToastAndroid.show("登录成功",ToastAndroid.LONG);
+
+            Cache.set("account", this.state.name);
+            global.username = this.state.name;
+
+            // 跳转主界面
+            this.props.navigation.navigate('HomeNavigator');
+          } else {
+            passwordError = '密码错误';
+            this.setState({ passwordError });
+            return;
+          }
+        }
+      }
+    );
   };
 
   render() {
@@ -47,7 +74,7 @@ export default class LoginScreen extends React.Component {
 
         <Header>College Guard</Header>
 
-        <TextInput
+        {/* <TextInput
           label="Email"
           returnKeyType="next"
           value={this.state.email}
@@ -58,13 +85,21 @@ export default class LoginScreen extends React.Component {
           autoCompleteType="email"
           textContentType="emailAddress"
           keyboardType="email-address"
+        /> */}
+        <TextInput
+          label="用户名"
+          returnKeyType="next"
+          value={this.state.name}
+          onChangeText={(name) => this.setState({ name })}
+          error={!!this.state.nameError}
+          errorText={this.state.nameError}
         />
 
         <TextInput
-          label="Password"
+          label="密码"
           returnKeyType="done"
           value={this.state.password}
-          onChangeText={(password) => this.setState({password})}
+          onChangeText={(password) => this.setState({ password })}
           error={!!this.state.passwordError}
           errorText={this.state.passwordError}
           secureTextEntry

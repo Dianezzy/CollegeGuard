@@ -1,4 +1,7 @@
-const URL = 'http://182.92.243.158:8002';
+import '../constants/globals';
+
+const URL = 'http://' + global.SERVER_IP + ':8003';//'http://182.92.243.158:8002';
+// const URL = 'http://192.168.43.117:8003';
 
 import Axios from 'axios';
 
