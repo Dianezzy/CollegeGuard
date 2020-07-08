@@ -96,7 +96,8 @@ export default class ShopCart extends React.Component {
                             if (response == 'Y') {
                                 Alert.alert('订单已生成');
                                 Cache.clearItems();
-                                this.setState({ items: Cache.getItemList() })
+                                this.setState({ items: Cache.getItemList(),
+                                    sumPrice:0 })
                             }
                             else {
                                 Alert.alert('订单生成错误');

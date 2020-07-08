@@ -64,7 +64,7 @@ export class CurrentOrder extends React.Component {
                                             // titleColor="#00ff00"
                                             />
                         }>
-                    <List renderHeader={'当前共有' + this.state.orders.length + '个订单未确认收货'}>
+                    <List renderHeader={'当前共有' + this.state.orders.length + '个订单未完成'}>
                     
                         {this.state.orders.map((order) => {
                             return (

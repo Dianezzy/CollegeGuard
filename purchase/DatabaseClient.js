@@ -38,7 +38,6 @@ export async function GetHistoryOrderList_tenant(id) {
 }
 
 
-
 export async function GetTenantInfo(id) {
     let data = { id: id };
     let result = await instance.get('/request/tenant/selectid', {
@@ -256,6 +255,31 @@ export function UpdateOrderState(id) {
     });
 }
 
+///////////////   更新订单状态为已支付
+export async function UpdateOrderStat_pay(OrderID) {
+    let data = {id: OrderID};
+    console.log(data);
+    let result = await instance.post('/request/shoppingOrder/updateStatPay', data
+    ).then(function (response) {
+        return response.data.result;
+    }).catch(function (error) {
+        console.log(error);
+    });
+    return result;
+}
+
+///////////////   更新订单状态为已收货
+export async function UpdateOrderStat_done(OrderID) {
+    let data = {id: OrderID};
+    console.log(data);
+    let result = await instance.post('/request/shoppingOrder/updateStatDone', data
+    ).then(function (response) {
+        return response.data.result;
+    }).catch(function (error) {
+        console.log(error);
+    });
+    return result;
+}
 
 //////////////  获取居民信息 ====上面有个同样功能的同名函数，我把这个注释掉了
 

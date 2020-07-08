@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import {PermissionsAndroid} from 'react-native';
 
 import Background from '../components/Background';
 import Logo from '../components/Logo';
@@ -13,6 +14,7 @@ export default class StartScreen extends React.Component {
   }
 
   componentDidMount(){
+    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION);
     // global._init = false;
     // console.log('start reload');
   }
@@ -38,12 +40,12 @@ export default class StartScreen extends React.Component {
         </Button>
 
         {/* only for developer */}
-        <Button
+        {/* <Button
           mode="outlined"
           onPress={() => this.props.navigation.navigate('HomeNavigator')}
         >
           开发者登录
-        </Button>
+        </Button> */}
 
       </Background>
     );
