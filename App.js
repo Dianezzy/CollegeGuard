@@ -6,7 +6,6 @@ import { Platform, StatusBar, StyleSheet, View, BackHandler, PermissionsAndroid 
 import * as Font from 'expo-font';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
-import useCachedResources from './hooks/useCachedResources';
 import StartNavigator from './navigation/StartNavigator';
 // import MyLoading from "./components/MyLoading";
 

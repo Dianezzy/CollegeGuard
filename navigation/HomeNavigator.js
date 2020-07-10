@@ -8,9 +8,9 @@ import ShoppingNavigator from '../purchase/shopping/ShoppingNavigator';
 
 import {
     HomeScreen,
-    ShopScreen,
+    // ShopScreen,
     PersonalCenterScreen,
-    FindRouteScreen
+    // FindRouteScreen
 } from '../screens';
 
 const BottomTab=createBottomTabNavigator({

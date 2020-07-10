@@ -3,8 +3,8 @@ import { TextInput, View, StyleSheet, Alert } from 'react-native'
 import {  WhiteSpace } from '@ant-design/react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Heading2 } from '../../purchase_M/Text'
-import { GetOrderInfo, ChangeStat } from '../../purchase_M/DatabaseClient';
+import { Heading2 } from '../../components/Text'
+import { GetOrderInfo, ChangeStat } from '../DatabaseClient';
 import { UpdateOrderStat, UpdateOrderStat_done, UpdateOrderStat_pay } from '../../purchase/DatabaseClient';
 import Button from '../../components/Button';
 
